@@ -19,7 +19,11 @@ public class DnfController {
         Map<String, Object> map = DnfService.getGoldProportion();
         StringBuffer result = new StringBuffer("以下数据来自UU898HH");
         map.forEach((k, v) -> {
-            result.append(k + "=" + v+"HH");
+            result.append("金币:" + k + "=" + v+"HH");
+        });
+        Map<String, Object> map1 = DnfService.getContradiction();
+        map1.forEach((k, v) -> {
+            result.append("矛盾:" + k + "=" + v+"HH");
         });
         return result.toString();
     }

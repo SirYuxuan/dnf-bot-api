@@ -26,52 +26,36 @@ public class DnfService {
 
     public static Map<String,Object> getGoldProportion() {
         LinkedHashMap<String,Object> result = new LinkedHashMap<String,Object>();
-        for (int i = 0; i < spanOne.length; i++) {
-            String url = StrUtil.format(spanOne[i], System.currentTimeMillis());
-            String jsonText = HttpUtil.get(url);
-            JSONObject webJSON = JSONObject.parseObject(jsonText);
-            JSONArray jsonArray = webJSON.getJSONObject("list").getJSONArray("datas");
-            BigDecimal money = BigDecimal.ZERO;
-            for (Object item : jsonArray) {
-                String tmp = JSONObject.toJSONString(item);
-                money = money.add(JSONObject.parseObject(tmp).getBigDecimal("Scale"));
-            }
-            money = money.divide(new BigDecimal(String.valueOf(jsonArray.size()))).setScale(2, BigDecimal.ROUND_HALF_UP);
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            String crossPrice = decimalFormat.format(money);
-            switch (i){
-                case 0:
-                    result.put("跨一", crossPrice);
-                    break;
-                case 1:
-                    result.put("跨二", crossPrice);
-                    break;
-                case 2:
-                    result.put("跨三A", crossPrice);
-                    break;
-                case 3:
-                    result.put("跨三B", crossPrice);
-                    break;
-                case 4:
-                    result.put("跨四", crossPrice);
-                    break;
-                case 5:
-                    result.put("跨五", crossPrice);
-                    break;
-                case 6:
-                    result.put("跨六", crossPrice);
-                    break;
-                case 7:
-                    result.put("跨七", crossPrice);
-                    break;
-                case 8:
-
-                    break;
-                case 9:
-                    result.put("跨八", crossPrice);
-                    break;
-            }
+        String url = StrUtil.format(spanOne[6], System.currentTimeMillis());
+        String jsonText = HttpUtil.get(url);
+        JSONObject webJSON = JSONObject.parseObject(jsonText);
+        JSONArray jsonArray = webJSON.getJSONObject("list").getJSONArray("datas");
+        BigDecimal money = BigDecimal.ZERO;
+        for (Object item : jsonArray) {
+            String tmp = JSONObject.toJSONString(item);
+            money = money.add(JSONObject.parseObject(tmp).getBigDecimal("Scale"));
         }
+        money = money.divide(new BigDecimal(String.valueOf(jsonArray.size()))).setScale(2, BigDecimal.ROUND_HALF_UP);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String crossPrice = decimalFormat.format(money);
+        result.put("跨六", crossPrice);
+        return result;
+    }
+    public static Map<String,Object> getContradiction() {
+        LinkedHashMap<String,Object> result = new LinkedHashMap<String,Object>();
+        String url = StrUtil.format("http://www.uu898.com/ashx/GameRetail.ashx?act=a001&g=95&a=2330&s=25094&c=838&cmp=-1&_t={}", System.currentTimeMillis());
+        String jsonText = HttpUtil.get(url);
+        JSONObject webJSON = JSONObject.parseObject(jsonText);
+        JSONArray jsonArray = webJSON.getJSONObject("list").getJSONArray("datas");
+        BigDecimal money = BigDecimal.ZERO;
+        for (Object item : jsonArray) {
+            String tmp = JSONObject.toJSONString(item);
+            money = money.add(JSONObject.parseObject(tmp).getBigDecimal("Scale"));
+        }
+        money = money.divide(new BigDecimal(String.valueOf(jsonArray.size()))).setScale(2, BigDecimal.ROUND_HALF_UP);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String crossPrice = decimalFormat.format(money);
+        result.put("跨六", crossPrice);
         return result;
     }
 
